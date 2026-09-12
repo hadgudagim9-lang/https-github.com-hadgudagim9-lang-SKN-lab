@@ -1,0 +1,727 @@
+{
+  "app": "Skn Lab",
+  "purpose": "Reference knowledge base for AI face-scan analysis. Match detected symptoms to the most relatable skin issue(s) using weighted matching, then return a detailed but simple explanation, a daily homemade routine with tutorial, a recommended product, and an optional weekly-only routine.",
+  "matching_logic": {
+    "method": "weighted_multi_symptom",
+    "instructions": "Each issue has a list of symptoms with a weight (1.0 = strong indicator, 0.5 = supporting indicator). Sum the weights of matched symptoms per issue. The issue(s) with the highest total score are the primary matches. Multiple issues can be returned if scores are close (within 20% of the top score) since skin can have overlapping problems."
+  },
+  "global_disclaimer": "Skn Lab provides general skincare guidance based on visual analysis and is not a medical diagnosis. If symptoms are severe, painful, spreading, or not improving after 4-6 weeks, please see a licensed dermatologist.",
+  "skin_issues": [
+    {
+      "id": "acne",
+      "name": "Acne & Breakouts",
+      "symptoms": [
+        {
+          "symptom": "visible pimples or pustules",
+          "weight": 1.0
+        },
+        {
+          "symptom": "blackheads",
+          "weight": 0.7
+        },
+        {
+          "symptom": "whiteheads",
+          "weight": 0.7
+        },
+        {
+          "symptom": "oily T-zone",
+          "weight": 0.5
+        },
+        {
+          "symptom": "red inflamed bumps",
+          "weight": 0.8
+        }
+      ],
+      "issue_description": "Your pores are getting clogged with oil, dead skin, and bacteria, causing breakouts. This is usually driven by excess oil production, hormones, or a buildup of dead skin cells that traps bacteria under the surface.",
+      "solving_approach": "Focus on gentle exfoliation, oil control, and antibacterial care without over-drying the skin, which can trigger even more oil production.",
+      "weekly_routine": {
+        "type": "homemade",
+        "title": "Turmeric & Yogurt Antibacterial Mask (1x per week)",
+        "ingredients": [
+          "1 tsp turmeric powder",
+          "2 tbsp plain unsweetened yogurt"
+        ],
+        "steps": "Mix the turmeric powder with plain yogurt into a smooth paste. Apply evenly to clean face, avoiding the eye area. Leave for 15-20 minutes to let the antibacterial and exfoliating properties absorb. Rinse off with warm water.",
+        "youtube_tutorial": "https://www.youtube.com/watch?v=v-qJjvhtayM"
+      },
+      "disclaimer": "If acne is cystic, painful, or leaving deep scars, see a dermatologist — this may need prescription treatment.",
+      "pm_product_recommendation": {
+        "type": "Benzoyl Peroxide Spot Treatment (2.5%)",
+        "why": "A targeted overnight treatment that kills acne-causing bacteria directly at the source, working while you sleep.",
+        "amazon_link": "https://www.amazon.com/s?k=benzoyl+peroxide+2.5%25+spot+treatment"
+      },
+      "am_product_recommendation": {
+        "type": "Salicylic Acid Cleanser (2%)",
+        "why": "Gently unclogs pores each morning without over-drying.",
+        "amazon_link": "https://www.amazon.com/s?k=salicylic+acid+2%25+face+cleanser"
+      },
+      "routine_consistency_rule": "AM routine = am_homemade_routine + am_product_recommendation. PM routine = pm_homemade_routine + pm_product_recommendation. This exact pairing repeats identically every day of the 30-day plan for this matched issue. Do not rotate, swap, or alternate between AM and PM routines on different days.",
+      "pm_homemade_routine": {
+        "title": "Honey & Oatmeal Calming Mask",
+        "ingredients": [
+          "2 tbsp ground oats",
+          "1 tbsp raw honey",
+          "splash of warm water"
+        ],
+        "steps": "Blend oats into a fine powder, mix with honey and a little warm water into a paste, apply to clean face, leave 10 minutes, rinse with warm water.",
+        "youtube_tutorial": "https://www.youtube.com/watch?v=wIKLDX2Bbjg"
+      },
+      "am_homemade_routine": {
+        "title": "Green Tea Ice Cube Wipe",
+        "ingredients": [
+          "1 cooled green tea bag, brewed",
+          "ice cube tray"
+        ],
+        "steps": "Freeze brewed green tea into ice cubes overnight. Each morning, rub one cube gently over the face for 30-60 seconds to reduce redness and control oil before cleansing.",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=green+tea+ice+cube+face+acne+morning+routine"
+      }
+    },
+    {
+      "id": "dryness_dehydration",
+      "name": "Dryness & Dehydration",
+      "symptoms": [
+        {
+          "symptom": "flaky or peeling skin",
+          "weight": 1.0
+        },
+        {
+          "symptom": "tight feeling after washing",
+          "weight": 0.8
+        },
+        {
+          "symptom": "dull rough texture",
+          "weight": 0.6
+        },
+        {
+          "symptom": "fine lines appear more visible",
+          "weight": 0.5
+        }
+      ],
+      "issue_description": "Your skin's moisture barrier is depleted, meaning it's losing water faster than it can retain it. This can happen from harsh cleansers, weather, or not using enough hydrating layers.",
+      "solving_approach": "Rebuild the moisture barrier with humectants (draw in water) and occlusives (lock it in) rather than heavy exfoliation.",
+      "weekly_routine": {
+        "type": "homemade",
+        "title": "Avocado & Honey Moisture Mask (1x per week)",
+        "ingredients": [
+          "1/2 ripe avocado",
+          "1 tbsp honey"
+        ],
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=avocado+honey+face+mask+dry+skin+tutorial"
+      },
+      "disclaimer": "Persistent dryness with cracking or bleeding skin may indicate eczema — consult a dermatologist.",
+      "pm_product_recommendation": {
+        "type": "Hyaluronic Acid Serum",
+        "why": "Hyaluronic acid holds up to 1000x its weight in water, pulling moisture into the skin.",
+        "amazon_link": "https://www.amazon.com/s?k=hyaluronic+acid+serum+face"
+      },
+      "am_product_recommendation": {
+        "type": "Cream Hydrating Cleanser",
+        "why": "Cleanses without stripping moisture, essential for a compromised barrier.",
+        "amazon_link": "https://www.amazon.com/s?k=hydrating+cream+cleanser+dry+skin"
+      },
+      "routine_consistency_rule": "AM routine = am_homemade_routine + am_product_recommendation. PM routine = pm_homemade_routine + pm_product_recommendation. This exact pairing repeats identically every day of the 30-day plan for this matched issue. Do not rotate, swap, or alternate between AM and PM routines on different days.",
+      "pm_homemade_routine": {
+        "title": "Rice Water Hydrating Toner",
+        "ingredients": [
+          "1/2 cup uncooked rice",
+          "1.5 cups water"
+        ],
+        "steps": "Rinse rice, soak in water for 30 minutes, strain the milky water into a bottle, apply with a cotton pad after cleansing morning and night.",
+        "youtube_tutorial": "https://www.youtube.com/watch?v=GcNfRzxHZz8"
+      },
+      "am_homemade_routine": {
+        "title": "Rice Water Hydrating Toner",
+        "ingredients": [
+          "1/2 cup uncooked rice",
+          "1.5 cups water"
+        ],
+        "steps": "Rinse rice, soak 30 minutes, strain the milky water into a bottle, apply with a cotton pad after cleansing each morning.",
+        "youtube_tutorial": "https://www.youtube.com/watch?v=GcNfRzxHZz8"
+      }
+    },
+    {
+      "id": "oily_skin",
+      "name": "Oily Skin & Excess Sebum",
+      "symptoms": [
+        {
+          "symptom": "shiny skin by midday",
+          "weight": 1.0
+        },
+        {
+          "symptom": "enlarged visible pores",
+          "weight": 0.7
+        },
+        {
+          "symptom": "makeup slides off",
+          "weight": 0.6
+        },
+        {
+          "symptom": "frequent blackheads",
+          "weight": 0.6
+        }
+      ],
+      "issue_description": "Your sebaceous glands are producing more oil than your skin needs, often due to genetics, hormones, or over-stripping your skin (which can trigger it to overproduce oil to compensate).",
+      "solving_approach": "Balance oil production with gentle, non-stripping cleansers and mattifying, oil-absorbing ingredients — avoid harsh alcohol-based products.",
+      "weekly_routine": {
+        "type": "homemade",
+        "title": "Bentonite Clay Oil-Control Mask (1x per week)",
+        "ingredients": [
+          "1 tbsp bentonite clay",
+          "water to mix"
+        ],
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=bentonite+clay+mask+oily+skin+tutorial"
+      },
+      "disclaimer": "None — oily skin is a normal skin type, not a medical concern, though excessive oiliness with pain may need medical review.",
+      "pm_product_recommendation": {
+        "type": "Niacinamide Serum (10%)",
+        "why": "Niacinamide regulates oil production and minimizes the look of pores over time.",
+        "amazon_link": "https://www.amazon.com/s?k=niacinamide+10%25+serum"
+      },
+      "am_product_recommendation": {
+        "type": "Gel Foaming Cleanser",
+        "why": "Removes excess overnight oil without disrupting the skin barrier.",
+        "amazon_link": "https://www.amazon.com/s?k=gel+foaming+cleanser+oily+skin"
+      },
+      "routine_consistency_rule": "AM routine = am_homemade_routine + am_product_recommendation. PM routine = pm_homemade_routine + pm_product_recommendation. This exact pairing repeats identically every day of the 30-day plan for this matched issue. Do not rotate, swap, or alternate between AM and PM routines on different days.",
+      "pm_homemade_routine": {
+        "title": "Rice Water Mattifying Toner",
+        "ingredients": [
+          "1/2 cup rice",
+          "1.5 cups water"
+        ],
+        "steps": "Soak and strain rice water, spritz onto face after cleansing to help tighten pores and mattify skin.",
+        "youtube_tutorial": "https://www.youtube.com/watch?v=QfETAHBqQJw"
+      },
+      "am_homemade_routine": {
+        "title": "Rice Water Mattifying Toner",
+        "ingredients": [
+          "1/2 cup rice",
+          "1.5 cups water"
+        ],
+        "steps": "Soak and strain rice water, spritz onto face after cleansing to mattify and tighten pores for the day ahead.",
+        "youtube_tutorial": "https://www.youtube.com/watch?v=QfETAHBqQJw"
+      }
+    },
+    {
+      "id": "redness_sensitivity",
+      "name": "Redness & Sensitivity",
+      "symptoms": [
+        {
+          "symptom": "visible red patches",
+          "weight": 1.0
+        },
+        {
+          "symptom": "burning or stinging after products",
+          "weight": 0.8
+        },
+        {
+          "symptom": "flushing easily",
+          "weight": 0.7
+        },
+        {
+          "symptom": "visible small blood vessels",
+          "weight": 0.6
+        }
+      ],
+      "issue_description": "Your skin barrier is likely compromised or reactive, causing inflammation to show on the surface as redness. This can be triggered by weather, harsh products, or a naturally sensitive skin type.",
+      "solving_approach": "Use only gentle, fragrance-free, anti-inflammatory ingredients. Avoid actives like retinol or strong acids until redness calms.",
+      "weekly_routine": {
+        "type": "homemade",
+        "title": "Aloe Vera Calming Mask (1x per week)",
+        "ingredients": [
+          "2 tbsp fresh aloe vera gel"
+        ],
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=aloe+vera+face+mask+redness+tutorial"
+      },
+      "disclaimer": "Persistent redness with bumps or visible blood vessels may be rosacea — please see a dermatologist for proper diagnosis, as home remedies alone won't resolve it.",
+      "pm_product_recommendation": {
+        "type": "Centella Asiatica (Cica) Cream",
+        "why": "Cica is known for calming inflammation and repairing a damaged skin barrier.",
+        "amazon_link": "https://www.amazon.com/s?k=centella+asiatica+cica+cream"
+      },
+      "am_product_recommendation": {
+        "type": "Fragrance-Free Gentle Cleanser",
+        "why": "Cleanses without triggering further irritation or stripping the barrier.",
+        "amazon_link": "https://www.amazon.com/s?k=fragrance+free+gentle+cleanser+sensitive+skin"
+      },
+      "routine_consistency_rule": "AM routine = am_homemade_routine + am_product_recommendation. PM routine = pm_homemade_routine + pm_product_recommendation. This exact pairing repeats identically every day of the 30-day plan for this matched issue. Do not rotate, swap, or alternate between AM and PM routines on different days.",
+      "pm_homemade_routine": {
+        "title": "Oatmeal Soothing Compress",
+        "ingredients": [
+          "2 tbsp ground oats",
+          "warm water"
+        ],
+        "steps": "Mix oats with warm water into a paste, apply as a thin layer for 10 minutes, rinse gently with cool water.",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=oatmeal+soothing+mask+sensitive+skin+redness+tutorial"
+      },
+      "am_homemade_routine": {
+        "title": "Oatmeal Soothing Compress",
+        "ingredients": [
+          "2 tbsp ground oats",
+          "warm water"
+        ],
+        "steps": "Mix oats with warm water into a paste, apply as a thin layer for 10 minutes, rinse gently with cool water before starting the day.",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=oatmeal+soothing+mask+sensitive+skin+redness+tutorial"
+      }
+    },
+    {
+      "id": "hyperpigmentation",
+      "name": "Hyperpigmentation & Dark Spots",
+      "symptoms": [
+        {
+          "symptom": "dark spots after breakouts heal",
+          "weight": 1.0
+        },
+        {
+          "symptom": "uneven brown patches",
+          "weight": 0.9
+        },
+        {
+          "symptom": "sun spots",
+          "weight": 0.7
+        }
+      ],
+      "issue_description": "Extra melanin is being produced in certain areas, usually left over from healed acne, sun exposure, or inflammation. This fades over time but can be sped up with the right ingredients.",
+      "solving_approach": "Focus on gentle brightening ingredients and consistent SPF use, since sun exposure makes dark spots darker and slower to fade.",
+      "weekly_routine": {
+        "type": "homemade",
+        "title": "Papaya Enzyme Brightening Mask (1x per week)",
+        "ingredients": [
+          "2 tbsp mashed ripe papaya"
+        ],
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=papaya+face+mask+dark+spots+tutorial"
+      },
+      "disclaimer": "Daily SPF is essential — without it, dark spots won't fade and can get worse.",
+      "pm_product_recommendation": {
+        "type": "Vitamin C Serum (15-20%)",
+        "why": "Vitamin C inhibits excess melanin production and brightens existing dark spots over time.",
+        "amazon_link": "https://www.amazon.com/s?k=vitamin+c+serum+dark+spots"
+      },
+      "am_product_recommendation": {
+        "type": "Vitamin C Brightening Cleanser",
+        "why": "Preps skin each morning to better absorb brightening actives.",
+        "amazon_link": "https://www.amazon.com/s?k=vitamin+c+brightening+cleanser"
+      },
+      "routine_consistency_rule": "AM routine = am_homemade_routine + am_product_recommendation. PM routine = pm_homemade_routine + pm_product_recommendation. This exact pairing repeats identically every day of the 30-day plan for this matched issue. Do not rotate, swap, or alternate between AM and PM routines on different days.",
+      "pm_homemade_routine": {
+        "title": "Lemon-Free Turmeric & Yogurt Brightening Mask",
+        "ingredients": [
+          "1 tsp turmeric",
+          "2 tbsp plain yogurt"
+        ],
+        "steps": "Mix into a paste, apply for 10 minutes avoiding eye area, rinse well (turmeric can stain, use an old towel).",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=turmeric+yogurt+face+mask+dark+spots+tutorial"
+      },
+      "am_homemade_routine": {
+        "title": "Aloe Vera & Rice Water Brightening Splash",
+        "ingredients": [
+          "2 tbsp aloe vera gel",
+          "1 tbsp rice water"
+        ],
+        "steps": "Mix and pat onto clean skin each morning, leave 5 minutes, rinse — preps skin and adds light brightening before SPF.",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=aloe+vera+rice+water+morning+brightening+routine"
+      }
+    },
+    {
+      "id": "fine_lines_aging",
+      "name": "Fine Lines & Early Aging",
+      "symptoms": [
+        {
+          "symptom": "visible fine lines around eyes or mouth",
+          "weight": 1.0
+        },
+        {
+          "symptom": "loss of skin firmness",
+          "weight": 0.7
+        },
+        {
+          "symptom": "skin looks thinner",
+          "weight": 0.5
+        }
+      ],
+      "issue_description": "Collagen production naturally slows down over time, and combined with sun exposure and dehydration, this shows up as fine lines and loss of bounce in the skin.",
+      "solving_approach": "Support collagen production and hydration while protecting existing collagen from further breakdown (sun protection is key).",
+      "weekly_routine": {
+        "type": "homemade",
+        "title": "Egg White & Honey Firming Mask (1x per week)",
+        "ingredients": [
+          "1 egg white",
+          "1 tsp honey"
+        ],
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=egg+white+honey+firming+mask+tutorial"
+      },
+      "disclaimer": "Retinol should be introduced slowly (2-3x per week at first) to avoid irritation.",
+      "pm_product_recommendation": {
+        "type": "Retinol Serum (0.3-0.5%)",
+        "why": "Retinol is the most researched ingredient for boosting collagen production and smoothing fine lines.",
+        "amazon_link": "https://www.amazon.com/s?k=retinol+serum+fine+lines"
+      },
+      "am_product_recommendation": {
+        "type": "Antioxidant Hydrating Cleanser",
+        "why": "Gentle first step that protects skin from free-radical damage all day.",
+        "amazon_link": "https://www.amazon.com/s?k=antioxidant+hydrating+cleanser+anti+aging"
+      },
+      "routine_consistency_rule": "AM routine = am_homemade_routine + am_product_recommendation. PM routine = pm_homemade_routine + pm_product_recommendation. This exact pairing repeats identically every day of the 30-day plan for this matched issue. Do not rotate, swap, or alternate between AM and PM routines on different days.",
+      "pm_homemade_routine": {
+        "title": "Egg White & Honey Firming Mask",
+        "ingredients": [
+          "1 egg white",
+          "1 tsp honey"
+        ],
+        "steps": "Whisk together, apply a thin layer to clean face, leave for 15 minutes until it tightens, rinse with warm water.",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=egg+white+honey+face+mask+firming+tutorial"
+      },
+      "am_homemade_routine": {
+        "title": "Cold Green Tea Toner Splash",
+        "ingredients": [
+          "1 brewed green tea bag, chilled"
+        ],
+        "steps": "Splash or pat chilled green tea over face after cleansing — antioxidants help protect skin through the day.",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=green+tea+toner+anti+aging+morning+routine"
+      }
+    },
+    {
+      "id": "large_pores",
+      "name": "Large / Visible Pores",
+      "symptoms": [
+        {
+          "symptom": "visibly enlarged pores",
+          "weight": 1.0
+        },
+        {
+          "symptom": "pores more visible on nose and cheeks",
+          "weight": 0.7
+        },
+        {
+          "symptom": "rough uneven texture",
+          "weight": 0.5
+        }
+      ],
+      "issue_description": "Pores appear larger when they're stretched by excess oil, trapped debris, or a loss of skin elasticity around them.",
+      "solving_approach": "Keep pores clean and use ingredients that support elasticity and gentle tightening over time — pores can't shrink permanently, but appearance can visibly improve.",
+      "weekly_routine": {
+        "type": "homemade",
+        "title": "Bentonite Clay Deep Clean Mask (1x per week)",
+        "ingredients": [
+          "1 tbsp bentonite clay",
+          "water"
+        ],
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=bentonite+clay+mask+pores+tutorial"
+      },
+      "disclaimer": "Pore size is largely genetic — routines improve appearance, not permanent size.",
+      "pm_product_recommendation": {
+        "type": "Niacinamide + Zinc Serum",
+        "why": "Helps regulate oil and gradually refines the appearance of pores.",
+        "amazon_link": "https://www.amazon.com/s?k=niacinamide+zinc+serum+pores"
+      },
+      "am_product_recommendation": {
+        "type": "Clay-Based Pore Cleanser",
+        "why": "Helps draw out debris that stretches pores each morning.",
+        "amazon_link": "https://www.amazon.com/s?k=clay+pore+cleanser"
+      },
+      "routine_consistency_rule": "AM routine = am_homemade_routine + am_product_recommendation. PM routine = pm_homemade_routine + pm_product_recommendation. This exact pairing repeats identically every day of the 30-day plan for this matched issue. Do not rotate, swap, or alternate between AM and PM routines on different days.",
+      "pm_homemade_routine": {
+        "title": "Egg White Pore-Tightening Mask",
+        "ingredients": [
+          "1 egg white"
+        ],
+        "steps": "Whisk lightly, apply thin layer, let dry for 10-15 minutes, rinse with cool water.",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=egg+white+mask+pore+tightening+tutorial"
+      },
+      "am_homemade_routine": {
+        "title": "Rice Water Pore-Tightening Splash",
+        "ingredients": [
+          "1/2 cup rice",
+          "1.5 cups water"
+        ],
+        "steps": "Soak and strain rice water, pat onto face after cleansing to temporarily tighten the look of pores for the day.",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=rice+water+pore+tightening+morning+routine"
+      }
+    },
+    {
+      "id": "dullness_texture",
+      "name": "Dullness & Uneven Texture",
+      "symptoms": [
+        {
+          "symptom": "skin looks tired or grayish",
+          "weight": 1.0
+        },
+        {
+          "symptom": "rough bumpy texture",
+          "weight": 0.7
+        },
+        {
+          "symptom": "lack of natural glow",
+          "weight": 0.6
+        }
+      ],
+      "issue_description": "A buildup of dead skin cells on the surface is blocking light reflection and smooth texture, making skin look dull instead of radiant.",
+      "solving_approach": "Gentle regular exfoliation to remove dead skin buildup, paired with hydration to reveal brighter, smoother skin underneath.",
+      "weekly_routine": {
+        "type": "homemade",
+        "title": "Papaya Enzyme Brightening Mask (1x per week)",
+        "ingredients": [
+          "2 tbsp mashed ripe papaya"
+        ],
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=papaya+face+mask+glow+tutorial"
+      },
+      "disclaimer": "Over-exfoliating can worsen dullness — stick to 2-3x per week max for actives.",
+      "pm_product_recommendation": {
+        "type": "Lactic Acid / AHA Exfoliant",
+        "why": "Gently dissolves dead skin buildup for smoother, brighter-looking skin.",
+        "amazon_link": "https://www.amazon.com/s?k=lactic+acid+exfoliant+dull+skin"
+      },
+      "am_product_recommendation": {
+        "type": "Exfoliating Gentle Cleanser",
+        "why": "Light daily buffing to keep dead skin from building up.",
+        "amazon_link": "https://www.amazon.com/s?k=exfoliating+gentle+cleanser+dull+skin"
+      },
+      "routine_consistency_rule": "AM routine = am_homemade_routine + am_product_recommendation. PM routine = pm_homemade_routine + pm_product_recommendation. This exact pairing repeats identically every day of the 30-day plan for this matched issue. Do not rotate, swap, or alternate between AM and PM routines on different days.",
+      "pm_homemade_routine": {
+        "title": "Rice & Honey Glow Scrub",
+        "ingredients": [
+          "2 tbsp ground rice powder",
+          "1 tbsp honey"
+        ],
+        "steps": "Mix into a paste, massage gently onto damp skin in circles for 1-2 minutes, rinse with warm water.",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=rice+honey+glow+scrub+tutorial"
+      },
+      "am_homemade_routine": {
+        "title": "Rice & Honey Glow Scrub",
+        "ingredients": [
+          "2 tbsp ground rice powder",
+          "1 tbsp honey"
+        ],
+        "steps": "Mix into a paste, massage gently onto damp skin in circles for 1-2 minutes, rinse with warm water to reveal brighter skin each morning.",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=rice+honey+glow+scrub+tutorial"
+      }
+    },
+    {
+      "id": "blackheads_whiteheads",
+      "name": "Blackheads & Whiteheads",
+      "symptoms": [
+        {
+          "symptom": "small dark dots on nose/chin",
+          "weight": 1.0
+        },
+        {
+          "symptom": "small white bumps under skin",
+          "weight": 0.8
+        },
+        {
+          "symptom": "rough texture around nose",
+          "weight": 0.5
+        }
+      ],
+      "issue_description": "Pores are clogged with a mix of oil and dead skin. When exposed to air it oxidizes and turns dark (blackhead); when trapped under skin it stays white (whitehead).",
+      "solving_approach": "Regular gentle exfoliation and pore-clearing ingredients like salicylic acid, plus consistent double cleansing to prevent buildup.",
+      "weekly_routine": {
+        "type": "homemade",
+        "title": "Charcoal & Clay Deep Pore Mask (1x per week)",
+        "ingredients": [
+          "1 tbsp activated charcoal powder",
+          "1 tbsp bentonite clay",
+          "water"
+        ],
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=charcoal+clay+mask+blackheads+tutorial"
+      },
+      "disclaimer": "Avoid pore strips and harsh physical scrubbing too often — it can damage the skin barrier and worsen breakouts.",
+      "pm_product_recommendation": {
+        "type": "BHA (Salicylic Acid) Pore Treatment",
+        "why": "Oil-soluble, so it can actually get into the pore to dissolve buildup, unlike most other acids.",
+        "amazon_link": "https://www.amazon.com/s?k=bha+salicylic+acid+pore+treatment"
+      },
+      "am_product_recommendation": {
+        "type": "BHA Pore-Clearing Cleanser",
+        "why": "Daily oil-soluble cleanse that helps prevent new clogged pores.",
+        "amazon_link": "https://www.amazon.com/s?k=bha+pore+clearing+cleanser"
+      },
+      "routine_consistency_rule": "AM routine = am_homemade_routine + am_product_recommendation. PM routine = pm_homemade_routine + pm_product_recommendation. This exact pairing repeats identically every day of the 30-day plan for this matched issue. Do not rotate, swap, or alternate between AM and PM routines on different days.",
+      "pm_homemade_routine": {
+        "title": "Baking Soda & Water Gentle Scrub",
+        "ingredients": [
+          "1 tsp baking soda",
+          "water to form paste"
+        ],
+        "steps": "Mix into a light paste, massage gently on affected areas for 30 seconds only, rinse immediately (use sparingly, 2x per week max, not daily on sensitive skin).",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=diy+blackhead+remover+scrub+tutorial"
+      },
+      "am_homemade_routine": {
+        "title": "Warm Water Steam Open-Pore Prep",
+        "ingredients": [
+          "warm water",
+          "clean towel"
+        ],
+        "steps": "Splash face with warm water or hold a warm damp towel over face for 1-2 minutes before cleansing to loosen debris in pores.",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=warm+water+steam+open+pores+morning+routine"
+      }
+    },
+    {
+      "id": "dark_circles",
+      "name": "Dark Circles",
+      "symptoms": [
+        {
+          "symptom": "darkened under-eye area",
+          "weight": 1.0
+        },
+        {
+          "symptom": "tired appearance",
+          "weight": 0.5
+        },
+        {
+          "symptom": "thin under-eye skin",
+          "weight": 0.4
+        }
+      ],
+      "issue_description": "Thin skin under the eyes lets underlying blood vessels show through more, often worsened by lack of sleep, dehydration, or genetics.",
+      "solving_approach": "Improve circulation and hydration in the under-eye area, and address lifestyle factors like sleep where possible.",
+      "weekly_routine": {
+        "type": "homemade",
+        "title": "Cold Green Tea Bag Compress (1x per week)",
+        "ingredients": [
+          "2 used green tea bags, chilled"
+        ],
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=green+tea+bags+dark+circles+tutorial"
+      },
+      "disclaimer": "Genetic dark circles won't fully disappear with topical care — results will be a visible improvement, not full removal.",
+      "pm_product_recommendation": {
+        "type": "Caffeine Eye Cream",
+        "why": "Caffeine constricts blood vessels and reduces the appearance of darkness and puffiness.",
+        "amazon_link": "https://www.amazon.com/s?k=caffeine+eye+cream+dark+circles"
+      },
+      "am_product_recommendation": {
+        "type": "Gentle Hydrating Cleanser",
+        "why": "Basic non-irritating cleanse safe for the delicate eye area routine.",
+        "amazon_link": "https://www.amazon.com/s?k=gentle+hydrating+facial+cleanser"
+      },
+      "routine_consistency_rule": "AM routine = am_homemade_routine + am_product_recommendation. PM routine = pm_homemade_routine + pm_product_recommendation. This exact pairing repeats identically every day of the 30-day plan for this matched issue. Do not rotate, swap, or alternate between AM and PM routines on different days.",
+      "pm_homemade_routine": {
+        "title": "Chilled Cucumber Slices",
+        "ingredients": [
+          "1 cucumber, chilled and sliced"
+        ],
+        "steps": "Place chilled cucumber slices over closed eyes for 10-15 minutes daily.",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=cucumber+eye+mask+dark+circles+tutorial"
+      },
+      "am_homemade_routine": {
+        "title": "Chilled Cucumber Slices",
+        "ingredients": [
+          "1 cucumber, chilled and sliced"
+        ],
+        "steps": "Place chilled cucumber slices over closed eyes for 10-15 minutes each morning to reduce puffiness and brighten under-eyes.",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=cucumber+eye+mask+dark+circles+tutorial"
+      }
+    },
+    {
+      "id": "puffiness",
+      "name": "Puffiness & Swelling",
+      "symptoms": [
+        {
+          "symptom": "swollen under-eye bags",
+          "weight": 1.0
+        },
+        {
+          "symptom": "puffy face in the morning",
+          "weight": 0.7
+        }
+      ],
+      "issue_description": "Fluid is building up under the skin, often from sleep position, sodium intake, allergies, or lack of sleep.",
+      "solving_approach": "Reduce fluid retention with cold therapy and lymphatic drainage massage.",
+      "weekly_routine": {
+        "type": "homemade",
+        "title": "Potato Slice Treatment (1x per week)",
+        "ingredients": [
+          "1 chilled potato, sliced thin"
+        ],
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=potato+slices+puffy+eyes+tutorial"
+      },
+      "disclaimer": "Sudden or severe facial swelling could indicate an allergic reaction — seek medical attention if it happens suddenly.",
+      "pm_product_recommendation": {
+        "type": "Cooling Roller / Gua Sha Tool",
+        "why": "Helps manually stimulate lymphatic drainage to reduce fluid buildup.",
+        "amazon_link": "https://www.amazon.com/s?k=gua+sha+facial+roller+puffiness"
+      },
+      "am_product_recommendation": {
+        "type": "Cooling Gel Cleanser",
+        "why": "Refreshing morning cleanse that helps de-puff on contact.",
+        "amazon_link": "https://www.amazon.com/s?k=cooling+gel+cleanser+face"
+      },
+      "routine_consistency_rule": "AM routine = am_homemade_routine + am_product_recommendation. PM routine = pm_homemade_routine + pm_product_recommendation. This exact pairing repeats identically every day of the 30-day plan for this matched issue. Do not rotate, swap, or alternate between AM and PM routines on different days.",
+      "pm_homemade_routine": {
+        "title": "Chilled Spoon Massage",
+        "ingredients": [
+          "2 metal spoons, chilled in freezer"
+        ],
+        "steps": "Gently glide chilled spoons under the eyes and across puffy areas for 2-3 minutes each morning.",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=chilled+spoon+face+massage+puffiness+tutorial"
+      },
+      "am_homemade_routine": {
+        "title": "Chilled Spoon Massage",
+        "ingredients": [
+          "2 metal spoons, chilled in freezer"
+        ],
+        "steps": "Gently glide chilled spoons under the eyes and across puffy areas for 2-3 minutes each morning.",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=chilled+spoon+face+massage+puffiness+tutorial"
+      }
+    },
+    {
+      "id": "uneven_tone_sun_damage",
+      "name": "Uneven Skin Tone & Sun Damage",
+      "symptoms": [
+        {
+          "symptom": "patchy discoloration",
+          "weight": 1.0
+        },
+        {
+          "symptom": "some areas darker than others",
+          "weight": 0.8
+        },
+        {
+          "symptom": "rough leathery texture in sun-exposed areas",
+          "weight": 0.6
+        }
+      ],
+      "issue_description": "Uneven melanin distribution, often from cumulative sun exposure over time, causes some areas of skin to appear darker or patchier than others.",
+      "solving_approach": "Consistent SPF is non-negotiable here, paired with gentle brightening and exfoliating ingredients to even out tone over time.",
+      "weekly_routine": {
+        "type": "homemade",
+        "title": "Papaya & Aloe Brightening Mask (1x per week)",
+        "ingredients": [
+          "2 tbsp mashed ripe papaya",
+          "1 tbsp aloe vera gel"
+        ],
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=papaya+aloe+brightening+mask+uneven+skin+tone+tutorial"
+      },
+      "disclaimer": "New or changing dark spots should always be checked by a dermatologist to rule out skin cancer.",
+      "pm_product_recommendation": {
+        "type": "Broad Spectrum SPF 50 Sunscreen",
+        "why": "The single most important product for preventing further sun-related unevenness.",
+        "amazon_link": "https://www.amazon.com/s?k=broad+spectrum+spf+50+sunscreen+face"
+      },
+      "am_product_recommendation": {
+        "type": "Brightening Antioxidant Cleanser",
+        "why": "Preps skin each morning before SPF and brightening actives.",
+        "amazon_link": "https://www.amazon.com/s?k=brightening+antioxidant+cleanser"
+      },
+      "routine_consistency_rule": "AM routine = am_homemade_routine + am_product_recommendation. PM routine = pm_homemade_routine + pm_product_recommendation. This exact pairing repeats identically every day of the 30-day plan for this matched issue. Do not rotate, swap, or alternate between AM and PM routines on different days.",
+      "pm_homemade_routine": {
+        "title": "Aloe Vera & Rice Water Brightening Mix",
+        "ingredients": [
+          "2 tbsp aloe vera gel",
+          "1 tbsp rice water"
+        ],
+        "steps": "Mix and apply as a light layer after cleansing, leave 10 minutes, rinse.",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=aloe+vera+rice+water+brightening+mask+tutorial"
+      },
+      "am_homemade_routine": {
+        "title": "Aloe Vera & Rice Water Brightening Mix",
+        "ingredients": [
+          "2 tbsp aloe vera gel",
+          "1 tbsp rice water"
+        ],
+        "steps": "Mix and apply as a light layer after cleansing, leave 10 minutes, rinse — preps skin before SPF each morning.",
+        "youtube_tutorial": "https://www.youtube.com/results?search_query=aloe+vera+rice+water+brightening+mask+tutorial"
+      }
+    }
+  ]
+}

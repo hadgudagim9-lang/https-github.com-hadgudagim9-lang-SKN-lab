@@ -1,0 +1,34 @@
+{
+  "entities": {
+    "users": {
+      "title": "Users",
+      "description": "User profiles and account settings",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string" }
+      }
+    },
+    "reports": {
+      "title": "Skin Reports",
+      "description": "Saved skin analysis reports",
+      "properties": {
+        "userId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "skinScore": { "type": "number" },
+        "skinType": { "type": "string" },
+        "createdAt": { "type": "string" }
+      }
+    },
+    "chats": {
+      "title": "Chat Sessions",
+      "description": "User chat sessions with Gemini AI",
+      "properties": {
+        "userId": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      }
+    }
+  }
+}

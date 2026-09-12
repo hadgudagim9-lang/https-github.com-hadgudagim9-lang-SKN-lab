@@ -1,0 +1,6 @@
+{
+  "name": "SKN LAB",
+  "description": "Luxurious skin diagnostics, bio-metrics analysis, daily custom-made habits, and premium routines for physical glow-ups and self-improvement.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

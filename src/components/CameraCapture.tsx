@@ -1,19 +1,15 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Camera, Upload, AlertCircle, Image as ImageIcon, Check } from "lucide-react";
-import { SAMPLE_FACES } from "../data";
+import { Camera, Upload, AlertCircle, Check } from "lucide-react";
 
 interface CameraCaptureProps {
-  gender: "male" | "female";
-  selectedConcerns: string[];
+  gender?: "male" | "female";
+  selectedConcerns?: string[];
   onCapture: (base64Image: string) => void;
-  onUseSampleFace: (base64Image: string) => void;
+  onUseSampleFace?: (base64Image: string) => void;
 }
 
 export default function CameraCapture({
-  gender,
-  selectedConcerns,
   onCapture,
-  onUseSampleFace,
 }: CameraCaptureProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -21,9 +17,7 @@ export default function CameraCapture({
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
-  const [activeTab, setActiveTab] = useState<"camera" | "upload" | "samples">("camera");
-
-  const filteredSamples = SAMPLE_FACES.filter(face => face.gender === gender);
+  const [activeTab, setActiveTab] = useState<"camera" | "upload">("camera");
 
   useEffect(() => {
     if (activeTab === "camera" && cameraState === "inactive" && !previewImage) {
@@ -59,9 +53,8 @@ export default function CameraCapture({
       console.warn("Camera access failed:", err);
       setCameraState("error");
       setCameraError(
-        "Could not access the camera. You can still upload a photo or use a premium test sample face below."
+        "Could not access your camera. Please allow camera permissions or upload an image directly from your device."
       );
-      setActiveTab("samples");
     }
   };
 
@@ -127,10 +120,6 @@ export default function CameraCapture({
     }
   };
 
-  const handleUseSample = (sampleImgUrl: string) => {
-    setPreviewImage(sampleImgUrl);
-  };
-
   const resetCapture = () => {
     setPreviewImage(null);
     if (activeTab === "camera") {
@@ -145,81 +134,68 @@ export default function CameraCapture({
   };
 
   return (
-    <div className="w-full flex flex-col items-center gap-6" id="skin-capture-container">
-      {/* Luxurious Tab Switcher */}
-      <div className="flex bg-[#F4EDE4] p-1 rounded-full border border-[#E3C2B0]/60 w-full max-w-md shadow-sm" id="capture-tabs">
+    <div className="w-full flex flex-col items-center gap-5" id="skin-capture-container">
+      {/* 2-Option Tab Switcher: Take Selfie vs Upload Image */}
+      <div className="flex bg-[#F4EDE4] p-1 rounded-full border border-[#E3C2B0]/60 w-full max-w-md shadow-xs" id="capture-tabs">
         <button
           id="tab-camera"
+          type="button"
           onClick={() => {
             setActiveTab("camera");
             setPreviewImage(null);
           }}
-          className={`flex-1 flex items-center justify-center gap-2 py-2 text-xs font-semibold rounded-full transition-all duration-300 ${
+          className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-xs font-serif font-bold rounded-full transition-all duration-200 cursor-pointer ${
             activeTab === "camera"
-              ? "bg-[#3D2D29] text-[#FAF6F0] shadow-md"
-              : "text-[#3D2D29]/60 hover:text-[#3D2D29]"
+              ? "bg-[#2C1A0E] text-white shadow-sm"
+              : "text-[#2C1A0E]/70 hover:text-[#2C1A0E]"
           }`}
         >
-          <Camera className="w-3.5 h-3.5" />
-          Live Camera
+          <Camera className="w-4 h-4" />
+          Take a Selfie
         </button>
         <button
           id="tab-upload"
+          type="button"
           onClick={() => {
             setActiveTab("upload");
             stopCamera();
             setPreviewImage(null);
           }}
-          className={`flex-1 flex items-center justify-center gap-2 py-2 text-xs font-semibold rounded-full transition-all duration-300 ${
+          className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-xs font-serif font-bold rounded-full transition-all duration-200 cursor-pointer ${
             activeTab === "upload"
-              ? "bg-[#3D2D29] text-[#FAF6F0] shadow-md"
-              : "text-[#3D2D29]/60 hover:text-[#3D2D29]"
+              ? "bg-[#2C1A0E] text-white shadow-sm"
+              : "text-[#2C1A0E]/70 hover:text-[#2C1A0E]"
           }`}
         >
-          <Upload className="w-3.5 h-3.5" />
+          <Upload className="w-4 h-4" />
           Upload Image
-        </button>
-        <button
-          id="tab-samples"
-          onClick={() => {
-            setActiveTab("samples");
-            stopCamera();
-            setPreviewImage(null);
-          }}
-          className={`flex-1 flex items-center justify-center gap-2 py-2 text-xs font-semibold rounded-full transition-all duration-300 ${
-            activeTab === "samples"
-              ? "bg-[#3D2D29] text-[#FAF6F0] shadow-md"
-              : "text-[#3D2D29]/60 hover:text-[#3D2D29]"
-          }`}
-        >
-          Demo Profiles
         </button>
       </div>
 
-      {/* Main Preview Frame styled exactly like Image 3 */}
-      <div className="relative w-full max-w-md aspect-square sm:aspect-[4/3] rounded-3xl overflow-hidden bg-slate-900 border border-[#E3C2B0] shadow-xl flex items-center justify-center">
+      {/* Main Preview Frame */}
+      <div className="relative w-full max-w-md aspect-square sm:aspect-[4/3] rounded-3xl overflow-hidden bg-[#2C1A0E]/90 border border-[#E3C2B0] shadow-xl flex items-center justify-center">
         
-        {/* Custom White Oval Guide Overlay matching Image 3 precisely */}
+        {/* Custom Oval Guide Overlay during Live Camera */}
         {!previewImage && activeTab === "camera" && cameraState === "active" && (
           <div className="absolute inset-0 pointer-events-none z-10 flex flex-col justify-between p-6">
             <div className="flex-1 flex items-center justify-center">
               {/* Face tracking oval guide */}
-              <div className="w-[60%] h-[75%] border-2 border-[#FAF6F0] rounded-[100%/100%] shadow-[0_0_0_9999px_rgba(61,45,41,0.45)] relative">
-                {/* Horizontal guide lines */}
-                <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-[#FAF6F0]/30"></div>
-                <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-[#FAF6F0]/30"></div>
+              <div className="w-[62%] h-[78%] border-2 border-white/90 rounded-[100%/100%] shadow-[0_0_0_9999px_rgba(44,26,14,0.45)] relative">
+                {/* Horizontal & vertical subtle crosshairs */}
+                <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-white/30"></div>
+                <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-white/30"></div>
               </div>
             </div>
             {/* Overlay instruction text */}
-            <div className="text-center z-20 pb-4">
-              <span className="bg-[#3D2D29]/80 backdrop-blur-sm text-[#FAF6F0] text-[11px] font-bold px-4 py-2 rounded-full border border-[#E3C2B0]/30">
-                Align your face inside the oval
+            <div className="text-center z-20 pb-2">
+              <span className="bg-[#2C1A0E]/85 backdrop-blur-sm text-[#FAF7F4] text-[11px] font-semibold px-4 py-1.5 rounded-full border border-[#E3C2B0]/30 shadow-sm">
+                Center your face in the oval
               </span>
             </div>
           </div>
         )}
 
-        {/* 1. LIVE CAMERA VIEW */}
+        {/* 1. LIVE CAMERA VIEW (Take a Selfie) */}
         {activeTab === "camera" && (
           <div className="w-full h-full relative">
             {!previewImage && cameraState !== "error" && (
@@ -232,55 +208,61 @@ export default function CameraCapture({
               />
             )}
 
-            {/* Error Message when Camera isn't available */}
-            {cameraState === "error" && (
-              <div className="p-8 text-center flex flex-col items-center justify-center h-full gap-4 bg-[#FAF6F0]">
-                <div className="w-16 h-16 rounded-full bg-[#F4EDE4] border border-[#E3C2B0] flex items-center justify-center text-[#3D2D29]">
-                  <AlertCircle className="w-8 h-8" />
+            {/* Error Message when Camera isn't accessible */}
+            {cameraState === "error" && !previewImage && (
+              <div className="p-8 text-center flex flex-col items-center justify-center h-full gap-4 bg-[#FAF7F4]">
+                <div className="w-14 h-14 rounded-full bg-[#F4EDE4] border border-[#E3C2B0] flex items-center justify-center text-[#2C1A0E]">
+                  <AlertCircle className="w-7 h-7 text-[#E879A0]" />
                 </div>
-                <h4 className="text-[#3D2D29] font-bold text-base font-display">Webcam Mode Unavailable</h4>
-                <p className="text-[#3D2D29]/70 text-xs max-w-sm leading-relaxed">
+                <h4 className="text-[#2C1A0E] font-serif font-bold text-base">Camera Not Available</h4>
+                <p className="text-[#2C1A0E]/70 text-xs max-w-xs leading-relaxed">
                   {cameraError}
                 </p>
                 <button
-                  id="error-use-sample-btn"
-                  onClick={() => setActiveTab("samples")}
-                  className="px-5 py-2.5 bg-[#3D2D29] text-[#FAF6F0] text-xs font-bold rounded-full hover:bg-[#3D2D29]/90 transition"
+                  id="error-switch-upload-btn"
+                  type="button"
+                  onClick={() => {
+                    setActiveTab("upload");
+                  }}
+                  className="px-5 py-2.5 bg-[#2C1A0E] text-white text-xs font-serif font-bold rounded-xl hover:bg-[#3D2D29] transition cursor-pointer flex items-center gap-1.5"
                 >
-                  Browse Luxury Samples
+                  <Upload className="w-3.5 h-3.5" />
+                  Upload Image Instead
                 </button>
               </div>
             )}
 
-            {/* Captured Image Still */}
+            {/* Captured Still Preview */}
             {previewImage && (
               <div className="w-full h-full relative">
                 <img
                   src={previewImage}
-                  alt="Captured skin face still"
+                  alt="Captured selfie still"
                   className="w-full h-full object-cover"
                 />
               </div>
             )}
 
-            {/* Snapshot Trigger button (matches Image 3: dark circle) */}
+            {/* Snapshot Trigger Button */}
             {!previewImage && cameraState === "active" && (
-              <div className="absolute bottom-6 left-0 right-0 flex justify-center z-20">
+              <div className="absolute bottom-5 left-0 right-0 flex justify-center z-20">
                 <button
                   id="snap-photo-btn"
+                  type="button"
                   onClick={capturePhoto}
-                  className="w-16 h-16 rounded-full bg-[#3D2D29] text-[#FAF6F0] border-4 border-[#FAF6F0] flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg"
+                  className="w-16 h-16 rounded-full bg-[#FAF7F4] text-[#2C1A0E] border-4 border-[#2C1A0E] flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-xl cursor-pointer"
+                  title="Take Selfie Photo"
                 >
-                  <Camera className="w-6 h-6 stroke-[2]" />
+                  <Camera className="w-7 h-7 stroke-[2.2] text-[#2C1A0E]" />
                 </button>
               </div>
             )}
           </div>
         )}
 
-        {/* 2. UPLOAD FILE PANEL */}
+        {/* 2. UPLOAD IMAGE PANEL */}
         {activeTab === "upload" && (
-          <div className="w-full h-full bg-[#FAF6F0]">
+          <div className="w-full h-full bg-[#FAF7F4]">
             {!previewImage ? (
               <label
                 onDragEnter={handleDrag}
@@ -289,20 +271,23 @@ export default function CameraCapture({
                 onDrop={handleDrop}
                 className={`flex flex-col items-center justify-center w-full h-full border-2 border-dashed rounded-3xl cursor-pointer transition p-6 text-center ${
                   dragActive
-                    ? "border-[#3D2D29] bg-[#F4EDE4]"
-                    : "border-[#E3C2B0] hover:border-[#3D2D29]"
+                    ? "border-[#2C1A0E] bg-[#F4EDE4]"
+                    : "border-[#E3C2B0] hover:border-[#2C1A0E]"
                 }`}
               >
-                <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                  <div className="w-14 h-14 rounded-full bg-[#F4EDE4] border border-[#E3C2B0] flex items-center justify-center text-[#3D2D29] mb-4">
-                    <Upload className="w-6 h-6 text-[#CBA38E]" />
+                <div className="flex flex-col items-center justify-center pt-4 pb-4">
+                  <div className="w-14 h-14 rounded-2xl bg-[#F4EDE4] border border-[#E3C2B0] flex items-center justify-center text-[#2C1A0E] mb-3 shadow-2xs">
+                    <Upload className="w-6 h-6 text-[#2C1A0E]" />
                   </div>
-                  <p className="mb-2 text-sm text-[#3D2D29] font-semibold font-display">
-                    Click to upload face photo
+                  <p className="mb-1 text-sm text-[#2C1A0E] font-serif font-bold">
+                    Upload Your Face Photo
                   </p>
-                  <p className="text-xs text-[#3D2D29]/60 max-w-xs leading-relaxed mt-1">
-                    Upload an image file. Ensure clear lighting to guarantee high accuracy dermal results.
+                  <p className="text-xs text-[#2C1A0E]/65 max-w-xs leading-relaxed">
+                    Click to browse your photos or drag and drop an image here.
                   </p>
+                  <span className="mt-3 text-[10px] font-mono uppercase tracking-wider font-bold text-[#E879A0] bg-white border border-[#E3C2B0]/80 px-3 py-1 rounded-full">
+                    PNG, JPG or WEBP
+                  </span>
                 </div>
                 <input
                   type="file"
@@ -315,62 +300,7 @@ export default function CameraCapture({
               <div className="w-full h-full relative">
                 <img
                   src={previewImage}
-                  alt="Uploaded skin face still"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* 3. TEST SAMPLE PROFILES (Perfect for quick client-side demos) */}
-        {activeTab === "samples" && (
-          <div className="w-full h-full p-6 overflow-y-auto flex flex-col justify-center bg-[#FAF6F0]">
-            {!previewImage ? (
-              <div className="text-center space-y-4">
-                <div className="space-y-1">
-                  <h4 className="text-sm font-bold text-[#3D2D29] font-display">Select a Demo Profile</h4>
-                  <p className="text-xs text-[#3D2D29]/60 max-w-xs mx-auto">
-                    Evaluate with a preset bio-profile featuring {gender} skincare conditions.
-                  </p>
-                </div>
-                <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
-                  {filteredSamples.map((sample) => (
-                    <button
-                      key={sample.id}
-                      id={`sample-profile-${sample.id}`}
-                      onClick={() => handleUseSample(sample.image)}
-                      className="group flex flex-col items-center p-2.5 bg-[#F4EDE4] hover:bg-[#FAF6F0] border border-[#E3C2B0]/60 hover:border-[#3D2D29] rounded-2xl transition"
-                    >
-                      <div className="relative w-full aspect-square rounded-xl overflow-hidden mb-2 shadow-sm">
-                        <img
-                          src={sample.image}
-                          alt={sample.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                        />
-                      </div>
-                      <div className="w-full text-center">
-                        <span className="text-[#3D2D29] font-bold text-[11px] block truncate font-display">{sample.name}</span>
-                        <div className="flex gap-1 justify-center mt-1 flex-wrap">
-                          {sample.concerns.map((conc, idx) => (
-                            <span
-                              key={idx}
-                              className="px-1.5 py-0.5 bg-[#FAF6F0] text-[8px] font-mono font-bold text-[#CBA38E] rounded uppercase tracking-wider"
-                            >
-                              {conc}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <div className="w-full h-full relative -m-6 aspect-square sm:aspect-[4/3]">
-                <img
-                  src={previewImage}
-                  alt="Selected sample profile"
+                  alt="Uploaded face still"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -379,23 +309,25 @@ export default function CameraCapture({
         )}
       </div>
 
-      {/* Capture Confirmation Action Bar */}
+      {/* Confirmation & Continue Controls */}
       {previewImage && (
-        <div className="flex gap-3 w-full max-w-md mt-2" id="capture-confirmation-controls">
+        <div className="flex gap-3 w-full max-w-md mt-1 animate-in fade-in" id="capture-confirmation-controls">
           <button
             id="recapture-btn"
+            type="button"
             onClick={resetCapture}
-            className="flex-1 py-3 px-4 border border-[#E3C2B0] bg-transparent text-[#3D2D29] font-semibold text-xs rounded-xl hover:bg-[#F4EDE4] transition"
+            className="flex-1 py-3 px-4 border border-[#E3C2B0] bg-white text-[#2C1A0E] font-serif font-bold text-xs rounded-2xl hover:bg-[#F4EDE4] transition cursor-pointer"
           >
-            Choose Another Photo
+            Retake / Change
           </button>
           <button
             id="analyze-image-btn"
+            type="button"
             onClick={handleConfirm}
-            className="flex-1 py-3 px-4 bg-[#3D2D29] hover:bg-[#3D2D29]/90 text-[#FAF6F0] font-bold text-xs rounded-xl shadow-md flex items-center justify-center gap-2 transition"
+            className="flex-1 py-3 px-4 bg-[#2C1A0E] hover:bg-[#3D2D29] text-white font-serif font-bold text-xs rounded-2xl shadow-md flex items-center justify-center gap-1.5 transition cursor-pointer"
           >
-            <Check className="w-4 h-4 stroke-[3]" />
-            Personalized Routine
+            <Check className="w-4 h-4" />
+            Analyze My Skin
           </button>
         </div>
       )}

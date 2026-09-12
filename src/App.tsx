@@ -34,8 +34,7 @@ import {
   Zap,
   HelpCircle,
   MessageSquare,
-  ShieldCheck,
-  CreditCard
+  ShieldCheck
 } from "lucide-react";
 import { AppPhase, SkinConcern, SkinAnalysisResponse } from "./types";
 import { SKIN_CONCERNS, ONBOARDING_QUESTIONS, SAMPLE_FACES } from "./data";
@@ -349,15 +348,6 @@ export default function App() {
           </button>
 
           <div className="flex items-center gap-1.5 sm:gap-2">
-            <button
-              onClick={() => setPhase("paywall")}
-              className="text-[11px] font-bold uppercase tracking-wider text-pink-700 bg-pink-50 border border-pink-200 px-2.5 py-1 rounded-full hover:bg-pink-600 hover:text-white transition cursor-pointer flex items-center gap-1 shadow-2xs"
-              title="View $9.99 Plan & Paywall"
-            >
-              <CreditCard className="w-3 h-3 text-pink-600" />
-              <span>$9.99 Plan</span>
-            </button>
-
             <AuthHeader currentReport={analysisData} />
 
             <button
@@ -721,10 +711,6 @@ export default function App() {
               selectedConcerns={targetConcerns}
               onCapture={(base64Img) => {
                 setCapturedImage(base64Img);
-                setPhase("scanning");
-              }}
-              onUseSampleFace={(sampleImg) => {
-                setCapturedImage(sampleImg);
                 setPhase("scanning");
               }}
             />

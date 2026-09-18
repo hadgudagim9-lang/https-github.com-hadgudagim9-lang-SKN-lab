@@ -21,14 +21,14 @@ export default function WhopPaywall({
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   }
 }: WhopPaywallProps) {
-  const checkoutUrl = "https://whop.com/checkout/plan_RcK1E3yWGzGyw";
+  const checkoutUrl = "https://whop.com/skin-ai-b7ff/skn-lab/";
   const timeFormatted = formatTimer(timerSeconds);
 
   return (
     <div className="w-full max-w-md mx-auto flex flex-col items-center animate-in fade-in duration-300 py-1" id="whop-paywall-screen">
 
       {/* ========================================================================= */}
-      {/* TOP COUNTDOWN & 50% OFF BANNER (Brand Matched Espresso & Rose Theme) */}
+      {/* TOP COUNTDOWN & OFFER BANNER (Brand Matched Espresso & Rose Theme) */}
       {/* ========================================================================= */}
       <div className="w-full bg-gradient-to-b from-[#2C1A0E] to-[#3D2617] border border-[#E3C2B0]/30 rounded-3xl p-5 sm:p-6 text-white shadow-xl mb-5 text-center relative overflow-hidden">
         
@@ -42,32 +42,32 @@ export default function WhopPaywall({
           <span className="font-mono text-[#E879A0] font-black">{timeFormatted}</span>
         </h2>
 
-        {/* Center 50% OFF Box */}
+        {/* Center Discount Box */}
         <div className="w-full bg-white/10 backdrop-blur-md border border-[#E3C2B0]/40 rounded-2xl p-3.5 flex items-center justify-center gap-2.5 shadow-inner mb-3">
           <div className="w-7 h-7 rounded-xl bg-[#E879A0]/25 border border-[#E879A0]/40 flex items-center justify-center text-[#FAF7F4]">
             <Percent className="w-4 h-4 text-[#E879A0]" />
           </div>
           <span className="font-serif font-black text-base sm:text-lg tracking-wider text-white">
-            50% OFF APPLIED
+            SPECIAL OFFER APPLIED
           </span>
         </div>
 
         {/* Sub-label */}
         <div className="flex items-center justify-between text-xs text-[#FAF7F4]/80 font-medium px-2">
-          <span>Special discount reserved for:</span>
+          <span>Discount reserved for:</span>
           <span className="font-mono font-bold text-[#E879A0] text-sm">{timeFormatted}</span>
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* SINGLE PAYMENT OPTION CARD: $9.99 ONE-TIME FEE (50% OFF) */}
+      {/* SINGLE PAYMENT OPTION CARD: LIFETIME ACCESS PLAN */}
       {/* ========================================================================= */}
       <div className="w-full relative mb-4">
         
-        {/* Save 50% Pill */}
+        {/* Access Pill */}
         <div className="absolute -top-3 left-4 z-10 bg-[#2C1A0E] border border-[#E3C2B0]/60 text-[#FAF7F4] text-[10px] font-mono font-black uppercase tracking-wider px-3 py-0.5 rounded-md shadow-sm flex items-center gap-1">
           <Sparkles className="w-3 h-3 text-[#E879A0]" />
-          <span>SAVE 50%</span>
+          <span>FULL ACCESS</span>
         </div>
 
         {/* Clickable Card Link that triggers Whop checkout */}
@@ -91,28 +91,16 @@ export default function WhopPaywall({
                 <h3 className="font-serif font-bold text-sm sm:text-base text-[#2C1A0E] group-hover:text-[#8B5E3C] transition-colors flex items-center gap-1.5">
                   <span>Lifetime Access Plan</span>
                 </h3>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <span className="text-xs text-[#9CA3AF] line-through font-medium">$19.99</span>
-                  <span className="text-xs font-bold text-[#2C1A0E]">→ $9.99</span>
-                </div>
-                <span className="text-[10px] text-emerald-700 font-bold block mt-0.5 uppercase tracking-wide">
-                  ✓ One-Time Fee • No Subscription
+                <span className="text-[10px] text-emerald-700 font-bold block mt-1 uppercase tracking-wide">
+                  ✓ Full Custom Routine & Bio-Metrics Report
                 </span>
               </div>
             </div>
 
-            {/* Right: Price Box */}
-            <div className="bg-[#FAF7F4] border border-[#E3C2B0] rounded-2xl p-2.5 sm:p-3 text-right shrink-0 min-w-[85px]">
-              <span className="text-[10px] text-[#9CA3AF] line-through block leading-none font-medium mb-1">
-                $19.99
-              </span>
-              <div className="flex items-baseline justify-end gap-0.5">
-                <span className="text-xs text-[#2C1A0E] font-bold">$</span>
-                <span className="text-xl sm:text-2xl font-black text-[#2C1A0E] leading-none">9.99</span>
-              </div>
-              <span className="text-[9px] text-[#8B5E3C] font-semibold block mt-1">
-                one-time
-              </span>
+            {/* Right: Continue Action Pill */}
+            <div className="bg-[#FAF7F4] border border-[#E3C2B0] rounded-2xl px-3.5 py-2.5 text-center shrink-0 flex items-center gap-1 text-[#2C1A0E] font-serif font-bold text-xs group-hover:bg-[#2C1A0E] group-hover:text-white transition-colors shadow-2xs">
+              <span>Continue</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </div>
 
           </div>
@@ -128,7 +116,7 @@ export default function WhopPaywall({
           id="pay-and-unlock-report-btn"
           className="w-full py-4 bg-[#2C1A0E] hover:bg-[#3D2D29] text-white font-serif font-bold text-sm sm:text-base rounded-2xl shadow-lg flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] transition cursor-pointer text-center uppercase tracking-wider"
         >
-          <span>Get My Plan & Full Report ($9.99)</span>
+          <span>Get My Plan & Full Report</span>
           <ArrowRight className="w-4 h-4" />
         </a>
         <p className="text-[11px] text-[#2C1A0E]/70 text-center font-medium flex items-center justify-center gap-1.5">

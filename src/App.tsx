@@ -31,7 +31,6 @@ import {
   Droplets,
   Eye,
   Award,
-  Zap,
   HelpCircle,
   MessageSquare,
   ShieldCheck
@@ -424,7 +423,7 @@ export default function App() {
                 
                 {/* Floating Glassmorphism Badge */}
                 <div className="absolute bottom-3.5 right-3.5 z-10 bg-white/85 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/60 text-[#2C1A0E] text-[11px] font-semibold flex items-center gap-1.5 shadow-sm">
-                  <span>Clinical AI Skin Scan</span>
+                  <span>Clinical Skin Scan</span>
                 </div>
               </div>
             </div>
@@ -595,7 +594,7 @@ export default function App() {
                 { id: "dry", title: "Dry", desc: "Tightness after washing, flaking, or a dull complexion." },
                 { id: "combination", title: "Combination", desc: "Oily T-zone (forehead & nose) with normal or dry cheeks." },
                 { id: "sensitive", title: "Sensitive", desc: "Easily irritated, reactive, flushed, or prone to burning." },
-                { id: "unknown", title: "I don't know", desc: "Let our AI photo scan determine my exact oil-to-moisture metric." },
+                { id: "unknown", title: "I don't know", desc: "Let our photo scan determine my exact oil-to-moisture metric." },
               ].map((item) => (
                 <button
                   key={item.id}

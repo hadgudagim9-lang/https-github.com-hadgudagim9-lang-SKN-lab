@@ -577,7 +577,7 @@ export default function SkincareInventory({
             className="px-4 py-2.5 rounded-xl bg-[#3D2D29] hover:bg-[#3D2D29]/90 text-[#FAF6F0] text-xs font-bold font-mono uppercase tracking-wider transition cursor-pointer flex items-center gap-1.5 shadow-sm"
           >
             <Camera className="w-4 h-4 text-amber-300" />
-            <span>Add Product for AI Analysis</span>
+            <span>Add Product to Analyze</span>
           </button>
         </div>
       </div>
@@ -705,7 +705,7 @@ export default function SkincareInventory({
               onClick={() => setShowAddModal(true)}
               className="px-4 py-2 bg-[#3D2D29] text-[#FAF6F0] rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition cursor-pointer"
             >
-              Add Product for AI Analysis
+              Add Product to Analyze
             </button>
           </div>
         ) : (

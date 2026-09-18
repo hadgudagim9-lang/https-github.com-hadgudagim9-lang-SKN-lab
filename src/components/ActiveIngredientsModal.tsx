@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, Droplets, ShieldCheck, Zap, Info, Search, CheckCircle2, AlertTriangle, Layers } from "lucide-react";
+import { X, Droplets, ShieldCheck, Clock, Info, Search, CheckCircle2, AlertTriangle, Layers } from "lucide-react";
 
 export interface ActiveIngredientDetail {
   id: string;
@@ -359,7 +359,7 @@ export default function ActiveIngredientsModal({
                       {currentDisplay.category}
                     </span>
                     <span className="text-[10px] font-mono font-bold text-[#CBA38E] uppercase tracking-wider flex items-center gap-1">
-                      <Zap className="w-3 h-3" />
+                      <Clock className="w-3 h-3" />
                       Usage: {currentDisplay.whenToUse}
                     </span>
                   </div>

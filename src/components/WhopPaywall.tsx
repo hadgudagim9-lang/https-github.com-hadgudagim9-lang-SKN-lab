@@ -2,9 +2,8 @@ import React from "react";
 import { 
   Percent,
   ThumbsUp,
-  ArrowRight,
   ShieldCheck,
-  Sparkles
+  CheckCircle2
 } from "lucide-react";
 
 interface WhopPaywallProps {
@@ -21,8 +20,37 @@ export default function WhopPaywall({
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   }
 }: WhopPaywallProps) {
-  const checkoutUrl = "https://whop.com/skin-ai-b7ff/skn-lab/";
+  const checkoutUrl = "https://whop.com/checkout/plan_RcK1E3yWGzGyw";
   const timeFormatted = formatTimer(timerSeconds);
+
+  const handleOpenCheckout = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    try {
+      // 1. Attempt window.open first
+      const newWin = window.open(checkoutUrl, "_blank", "noopener,noreferrer");
+      if (!newWin || newWin.closed || typeof newWin.closed === "undefined") {
+        // If popup was blocked by browser or iframe sandbox, direct top-level navigation
+        if (window.top && window.top !== window) {
+          window.top.location.href = checkoutUrl;
+        } else {
+          window.location.href = checkoutUrl;
+        }
+      }
+    } catch {
+      try {
+        if (window.top) {
+          window.top.location.href = checkoutUrl;
+        } else {
+          window.location.href = checkoutUrl;
+        }
+      } catch {
+        window.location.href = checkoutUrl;
+      }
+    }
+  };
 
   return (
     <div className="w-full max-w-md mx-auto flex flex-col items-center animate-in fade-in duration-300 py-1" id="whop-paywall-screen">
@@ -65,16 +93,16 @@ export default function WhopPaywall({
       <div className="w-full relative mb-4">
         
         {/* Access Pill */}
-        <div className="absolute -top-3 left-4 z-10 bg-[#2C1A0E] border border-[#E3C2B0]/60 text-[#FAF7F4] text-[10px] font-mono font-black uppercase tracking-wider px-3 py-0.5 rounded-md shadow-sm flex items-center gap-1">
-          <Sparkles className="w-3 h-3 text-[#E879A0]" />
+        <div className="absolute -top-3 left-4 z-10 bg-[#2C1A0E] border border-[#E3C2B0]/60 text-[#FAF7F4] text-[10px] font-mono font-black uppercase tracking-wider px-3 py-0.5 rounded-md shadow-sm">
           <span>FULL ACCESS</span>
         </div>
 
         {/* Clickable Card Link that triggers Whop checkout */}
         <a
           href={checkoutUrl}
-          target="_blank"
+          target="_top"
           rel="noopener noreferrer"
+          onClick={handleOpenCheckout}
           id="single-plan-checkout-card"
           className="block w-full bg-white border-2 border-[#2C1A0E] rounded-3xl p-4 sm:p-5 shadow-md hover:shadow-lg transition-all cursor-pointer group active:scale-[0.99] relative"
         >
@@ -98,9 +126,8 @@ export default function WhopPaywall({
             </div>
 
             {/* Right: Continue Action Pill */}
-            <div className="bg-[#FAF7F4] border border-[#E3C2B0] rounded-2xl px-3.5 py-2.5 text-center shrink-0 flex items-center gap-1 text-[#2C1A0E] font-serif font-bold text-xs group-hover:bg-[#2C1A0E] group-hover:text-white transition-colors shadow-2xs">
+            <div className="bg-[#FAF7F4] border border-[#E3C2B0] rounded-2xl px-4 py-2.5 text-center shrink-0 flex items-center justify-center text-[#2C1A0E] font-serif font-bold text-xs group-hover:bg-[#2C1A0E] group-hover:text-white transition-colors shadow-2xs">
               <span>Continue</span>
-              <ArrowRight className="w-3.5 h-3.5" />
             </div>
 
           </div>
@@ -111,15 +138,29 @@ export default function WhopPaywall({
       <div className="w-full space-y-2 mb-4">
         <a
           href={checkoutUrl}
-          target="_blank"
+          target="_top"
           rel="noopener noreferrer"
+          onClick={handleOpenCheckout}
           id="pay-and-unlock-report-btn"
-          className="w-full py-4 bg-[#2C1A0E] hover:bg-[#3D2D29] text-white font-serif font-bold text-sm sm:text-base rounded-2xl shadow-lg flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] transition cursor-pointer text-center uppercase tracking-wider"
+          className="w-full py-4 bg-[#2C1A0E] hover:bg-[#3D2D29] text-white font-serif font-bold text-sm sm:text-base rounded-2xl shadow-lg flex items-center justify-center hover:scale-[1.01] active:scale-[0.99] transition cursor-pointer text-center uppercase tracking-wider"
         >
           <span>Get My Plan & Full Report</span>
-          <ArrowRight className="w-4 h-4" />
         </a>
-        <p className="text-[11px] text-[#2C1A0E]/70 text-center font-medium flex items-center justify-center gap-1.5">
+
+        {/* Direct Link Backup */}
+        <div className="text-center pt-0.5">
+          <a
+            href={checkoutUrl}
+            target="_top"
+            rel="noopener noreferrer"
+            onClick={handleOpenCheckout}
+            className="text-[11px] text-[#8B5E3C] hover:text-[#2C1A0E] font-medium underline transition cursor-pointer"
+          >
+            Direct checkout link: whop.com/checkout/plan_RcK1E3yWGzGyw
+          </a>
+        </div>
+
+        <p className="text-[11px] text-[#2C1A0E]/70 text-center font-medium flex items-center justify-center gap-1.5 pt-1">
           <ShieldCheck className="w-3.5 h-3.5 text-[#2C1A0E]" />
           <span>Secure 256-Bit Encrypted Checkout Powered by Whop</span>
         </p>

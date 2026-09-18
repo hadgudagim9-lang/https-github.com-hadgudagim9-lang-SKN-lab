@@ -230,7 +230,7 @@ export default function TestimonialsPage({ onStartAnalysis, onBack }: Testimonia
           Real People. Real Skin Results.
         </h1>
         <p className="text-xs sm:text-sm text-[#2C1A0E]/70 max-w-md mx-auto leading-relaxed">
-          See how thousands of users unlocked clear, glowing glass skin using SKN LAB's AI face analysis and custom routines.
+          See how thousands of users unlocked clear, glowing glass skin using SKN LAB's face analysis and custom routines.
         </p>
 
         {/* Rating Overview Pill */}
@@ -316,7 +316,7 @@ export default function TestimonialsPage({ onStartAnalysis, onBack }: Testimonia
                     {item.verifiedScan && (
                       <span className="inline-flex items-center gap-1 text-[9px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                         <CheckCircle2 className="w-2.5 h-2.5 text-emerald-600" />
-                        Verified AI Scan
+                        Verified Skin Scan
                       </span>
                     )}
                     <span className="text-[9px] text-[#2C1A0E]/50 font-mono">{item.location}</span>
@@ -358,9 +358,9 @@ export default function TestimonialsPage({ onStartAnalysis, onBack }: Testimonia
             {/* Key Routine Badge */}
             <div className="bg-[#F4EDE4]/60 border border-[#E3C2B0]/40 rounded-xl p-2 mb-3 text-[11px] text-[#2C1A0E]">
               <span className="font-bold text-[#2C1A0E] block text-[10px] uppercase font-mono tracking-wider text-[#2C1A0E]/70 mb-0.5">
-                Key AI Prescribed Routine:
+                Key Prescribed Routine:
               </span>
-              <span className="font-medium text-[#2C1A0E]/90">✨ {item.keyRoutine}</span>
+              <span className="font-medium text-[#2C1A0E]/90">{item.keyRoutine}</span>
             </div>
 
             {/* Footer with helpful count */}
@@ -393,14 +393,14 @@ export default function TestimonialsPage({ onStartAnalysis, onBack }: Testimonia
             Ready to unlock your personalized skin score?
           </h3>
           <p className="text-xs text-white/80 max-w-sm mx-auto mb-5 leading-relaxed">
-            Get your instant AI analysis, zone mapping, and clean custom routines in under 60 seconds.
+            Get your instant analysis, zone mapping, and clean custom routines in under 60 seconds.
           </p>
 
           <button
             onClick={onStartAnalysis}
             className="w-full sm:w-auto px-8 py-3.5 bg-[#E879A0] hover:bg-[#E879A0]/90 text-white font-extrabold text-sm rounded-2xl shadow-md transition hover:scale-[1.02] active:scale-[0.98] cursor-pointer inline-flex items-center justify-center gap-2 uppercase tracking-wider"
           >
-            Start Free AI Skin Scan Now →
+            Start Free Skin Scan Now →
           </button>
         </div>
       </div>
@@ -409,7 +409,7 @@ export default function TestimonialsPage({ onStartAnalysis, onBack }: Testimonia
       <div className="flex items-center justify-center gap-4 text-[10px] font-mono text-[#2C1A0E]/60 uppercase tracking-wider text-center">
         <span className="flex items-center gap-1">
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-700" />
-          Clinical AI Certified
+          Clinical Certified
         </span>
         <span>•</span>
         <span className="flex items-center gap-1">

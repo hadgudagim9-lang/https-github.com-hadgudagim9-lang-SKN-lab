@@ -69,12 +69,7 @@ export default function AuthHeader({ currentReport }: AuthHeaderProps) {
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center gap-2 text-xs text-[#3D2D29]/60 font-mono">
-        <Loader2 className="w-3.5 h-3.5 animate-spin text-[#E3C2B0]" />
-        <span>Syncing Firebase Auth...</span>
-      </div>
-    );
+    return null;
   }
 
   return (

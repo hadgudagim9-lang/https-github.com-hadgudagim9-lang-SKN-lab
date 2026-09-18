@@ -203,16 +203,16 @@ export default function DailySkincareTip({
         if (data && data.tip) {
           setCurrentTip({
             id: `ai-${Date.now()}`,
-            title: data.tip.title || `${selectedConcern} AI Master Tip`,
+            title: data.tip.title || `${selectedConcern} Master Tip`,
             category: "Dermatology Insight",
             concern: selectedConcern,
-            summary: data.tip.summary || "Custom AI recommendation generated for your skin.",
+            summary: data.tip.summary || "Custom recommendation generated for your skin.",
             detail: data.tip.detail || "Tailored specifically for active barrier protection.",
             actionStep: data.tip.actionStep || "Integrate into your routine step-by-step.",
             morningOrNight: data.tip.morningOrNight || "Both",
             keyIngredient: data.tip.keyIngredient || "Dermal Bio-Actives"
           });
-          setAiNote("Freshly generated via SKN AI Dermatology Model");
+          setAiNote("Freshly generated via SKN Dermatology Lab");
         }
       } else {
         // Fallback rotation
@@ -365,7 +365,7 @@ export default function DailySkincareTip({
           className="flex items-center gap-1.5 text-[11px] font-bold text-[#281811] hover:text-black transition cursor-pointer bg-[#F4EDE4] hover:bg-[#E8DACD] px-3 py-1.5 rounded-full"
         >
           <RotateCw className={`w-3.5 h-3.5 text-amber-700 ${isLoadingAi ? "animate-spin" : ""}`} />
-          <span>{isLoadingAi ? "Generating AI Tip..." : "Generate Fresh AI Tip"}</span>
+          <span>{isLoadingAi ? "Generating Tip..." : "Generate Fresh Tip"}</span>
         </button>
 
         <div className="flex items-center gap-2">

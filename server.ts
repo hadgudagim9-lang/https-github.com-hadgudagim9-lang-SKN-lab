@@ -2,7 +2,7 @@ import express from "express";
 import path from "path";
 import fs from "fs";
 import { createServer as createViteServer } from "vite";
-import { GoogleGenAI, ThinkingLevel } from "@google/genai";
+import { GoogleGenAI, ThinkingLevel, Type } from "@google/genai";
 import dotenv from "dotenv";
 import crypto from "crypto";
 
@@ -278,12 +278,79 @@ function getGeminiClient(): GoogleGenAI | null {
   return aiClient;
 }
 
+/**
+ * Resilient JSON extractor and parser for LLM outputs.
+ * Gracefully handles markdown code blocks, unexpected characters before/after JSON,
+ * trailing commentary, and unescaped trailing commas.
+ */
+function safeExtractJson<T = any>(rawText: string | null | undefined): T | null {
+  if (!rawText || typeof rawText !== "string") return null;
+  const trimmed = rawText.trim();
+  if (!trimmed) return null;
+
+  // 1. Direct parse attempt
+  try {
+    return JSON.parse(trimmed);
+  } catch (e) {
+    // Continue to robust extraction
+  }
+
+  // 2. Strip markdown fences: ```json ... ``` or ``` ... ```
+  const cleanedFences = trimmed
+    .replace(/^```(?:json)?\s*/i, "")
+    .replace(/\s*```\s*$/i, "")
+    .trim();
+
+  try {
+    return JSON.parse(cleanedFences);
+  } catch (e) {
+    // Continue
+  }
+
+  // 3. Extract outermost JSON object substring between first '{' and last '}'
+  const firstBrace = cleanedFences.indexOf("{");
+  const lastBrace = cleanedFences.lastIndexOf("}");
+  if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+    const candidate = cleanedFences.substring(firstBrace, lastBrace + 1);
+    try {
+      return JSON.parse(candidate);
+    } catch (e) {
+      try {
+        const withoutTrailingCommas = candidate.replace(/,\s*([\}\]])/g, "$1");
+        return JSON.parse(withoutTrailingCommas);
+      } catch (e2) {
+        // Continue
+      }
+    }
+  }
+
+  // 4. Extract outermost JSON array substring between first '[' and last ']'
+  const firstBracket = cleanedFences.indexOf("[");
+  const lastBracket = cleanedFences.lastIndexOf("]");
+  if (firstBracket !== -1 && lastBracket !== -1 && lastBracket > firstBracket) {
+    const candidate = cleanedFences.substring(firstBracket, lastBracket + 1);
+    try {
+      return JSON.parse(candidate);
+    } catch (e) {
+      try {
+        const withoutTrailingCommas = candidate.replace(/,\s*([\}\]])/g, "$1");
+        return JSON.parse(withoutTrailingCommas);
+      } catch (e2) {
+        // Continue
+      }
+    }
+  }
+
+  return null;
+}
+
 // Resilient Gemini generator with multi-model fallback and rate-limit/quota backoff
 async function generateGeminiContentWithFallback(
   ai: GoogleGenAI,
   params: {
     systemInstruction?: string;
     responseMimeType?: string;
+    responseSchema?: any;
     contents: any;
     modelsToTry?: string[];
   }
@@ -303,6 +370,7 @@ async function generateGeminiContentWithFallback(
       const config: any = {};
       if (params.systemInstruction) config.systemInstruction = params.systemInstruction;
       if (params.responseMimeType) config.responseMimeType = params.responseMimeType;
+      if (params.responseSchema) config.responseSchema = params.responseSchema;
 
       const response = await ai.models.generateContent({
         model,
@@ -2231,16 +2299,43 @@ Perform Step 1: Analyze this profile and any uploaded face image to output the e
       const geminiRes = await generateGeminiContentWithFallback(ai, {
         systemInstruction: systemPrompt,
         responseMimeType: "application/json",
+        responseSchema: {
+          type: Type.OBJECT,
+          properties: {
+            detected_symptoms: {
+              type: Type.ARRAY,
+              items: { type: Type.STRING },
+              description: "List of detected skin symptoms from the authorized symptoms list."
+            },
+            skin_score: {
+              type: Type.INTEGER,
+              description: "Estimated health score from 0-100."
+            },
+            hydration: {
+              type: Type.INTEGER,
+              description: "Estimated water hydration level 0-100."
+            },
+            oiliness: {
+              type: Type.INTEGER,
+              description: "Estimated sebum/oiliness level 0-100."
+            },
+            diagnostic_summary: {
+              type: Type.STRING,
+              description: "Empathetic clinical diagnostic summary."
+            }
+          },
+          required: ["detected_symptoms", "skin_score", "hydration", "oiliness", "diagnostic_summary"]
+        },
         contents: contents,
         modelsToTry: ["gemini-3.1-flash-lite", "gemini-3.7-flash", "gemini-flash-latest"]
       });
 
       if (geminiRes && geminiRes.text) {
-        try {
-          aiDiagnosisResponse = JSON.parse(geminiRes.text);
+        aiDiagnosisResponse = safeExtractJson(geminiRes.text);
+        if (aiDiagnosisResponse) {
           console.log(`Successfully completed Step 1 AI Diagnosis using model: ${geminiRes.modelUsed}`);
-        } catch (err) {
-          console.warn("Failed to parse Gemini diagnosis response as JSON:", err);
+        } else {
+          console.warn("Failed to parse Gemini diagnosis response as JSON. Raw preview:", geminiRes.text.substring(0, 200));
         }
       }
     }
@@ -2437,11 +2532,7 @@ Return ONLY a valid JSON object with the following fields:
       });
 
       if (geminiRes && geminiRes.text) {
-        try {
-          tipObj = JSON.parse(geminiRes.text);
-        } catch (e) {
-          console.warn("Failed to parse tip JSON:", e);
-        }
+        tipObj = safeExtractJson(geminiRes.text);
       }
     }
 
@@ -2642,12 +2733,7 @@ Return ONLY a valid JSON object matching this structure with no markdown or form
       });
 
       if (geminiRes && geminiRes.text) {
-        try {
-          const cleanedText = geminiRes.text.replace(/```json/g, "").replace(/```/g, "").trim();
-          resultJson = JSON.parse(cleanedText);
-        } catch (parseErr) {
-          console.warn("Failed to parse product scan vision JSON:", parseErr);
-        }
+        resultJson = safeExtractJson(geminiRes.text);
       }
     }
 

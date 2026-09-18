@@ -21,7 +21,7 @@ export default function WhopPaywall({
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   }
 }: WhopPaywallProps) {
-  const checkoutUrl = "https://whop.com/checkout/plan_v6eetsj5Y9NEw";
+  const checkoutUrl = "https://whop.com/checkout/plan_RcK1E3yWGzGyw";
   const timeFormatted = formatTimer(timerSeconds);
 
   return (

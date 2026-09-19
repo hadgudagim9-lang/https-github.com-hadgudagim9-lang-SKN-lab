@@ -43,6 +43,7 @@ import WhopPaywall from "./components/WhopPaywall";
 import UnlockedReport from "./components/UnlockedReport";
 import { generateClientFallbackReport } from "./utils/generateClientReport";
 import TestimonialsPage from "./components/TestimonialsPage";
+import SkinComparisonSlider from "./components/SkinComparisonSlider";
 import homepageSplitHeroImg from "./assets/images/homepage_split_hero_1783764252901.jpg";
 
 export default function App() {
@@ -412,20 +413,12 @@ export default function App() {
               Get your personalized skin routine
             </h1>
 
-            {/* Clean Hero Image Banner */}
+            {/* Interactive Before/After Skin Comparison Slider with Sliding Bright Light Bar ("Barrow") */}
             <div className="w-full relative mb-4">
-              <div className="w-full aspect-[4/3] sm:aspect-[1/1] rounded-[24px] sm:rounded-[32px] overflow-hidden relative shadow-[0_15px_35px_rgba(44,26,14,0.12)] border-2 border-white bg-[#E3C2B0]">
-                <img
-                  src={homepageSplitHeroImg}
-                  alt="Personalized Skincare Analysis"
-                  className="w-full h-full object-cover"
-                />
-                
-                {/* Floating Glassmorphism Badge */}
-                <div className="absolute bottom-3.5 right-3.5 z-10 bg-white/85 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/60 text-[#2C1A0E] text-[11px] font-semibold flex items-center gap-1.5 shadow-sm">
-                  <span>Clinical Skin Scan</span>
-                </div>
-              </div>
+              <SkinComparisonSlider
+                badgeText="Clinical Skin Scan"
+                className="w-full aspect-[4/5] sm:aspect-[1/1] rounded-[24px] sm:rounded-[32px] shadow-[0_15px_35px_rgba(44,26,14,0.12)] border-2 border-white bg-[#E3C2B0]"
+              />
             </div>
 
             {/* Action Button - Always Prominent & Reachable */}
